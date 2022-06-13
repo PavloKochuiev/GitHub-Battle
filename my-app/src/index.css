@@ -11,3 +11,31 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.section {
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    display: flex;
+    align-items: center;
+    align-content: center;
+    justify-content: center;
+    overflow: auto;
+    background: #0082D1;
+}
+
+.title {
+    background: #FFD100;
+    padding: 20px;
+    border-radius: 10px;
+}
+
+.text {
+    font-size: 20px;
+}
+
+.button {
+    background-color: aqua;
+}
