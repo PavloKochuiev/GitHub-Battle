@@ -1,32 +1,55 @@
 import React from "react";
-import Example from "./Example"
+import axios from "axios";
+
+const fetchElementsForList = () => {
+    return axios
+        .get("https://jsonplaceholder.typicode.com/posts")
+        .then((response) => response.data);
+};
 
 class App extends React.Component {
-
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
         this.state = {
-            country: "Ukraine"
-        }
+            posts: [],
+        };
     }
 
-    changeNameHandler = () => {
-        if (this.state.country === "Ukraine") {
-            this.setState({ country: "Ukraine is the best country" })
-        } else {
-            this.setState({ country: "Ukraine" })
-        }
+    componentDidMount() {
+        fetchElementsForList()
+            .then((data) => this.setState({ posts: data }))
+            .catch((error) => console.error(error));
+    }
+
+    removeItem(posts) {
+        const newPosts = this.state.posts.filter((newPost) => {
+            return newPost !== posts;
+        });
+
+        this.setState({
+            posts: [...newPosts],
+        });
     }
 
     render() {
         return (
-            <div className="section">
-                <div className="title">
-                <Example message={this.state.country} />
-                <button onClick={this.changeNameHandler} className="button">Upgrade</button>
-                </div>
+            <div className="col-md-8 offset-md-2">
+                <ul className="list-group">
+                    {this.state.posts.map((posts) => (
+                        <li className="list-group-item" key={posts.id}>
+                            <div className="list-group-item">{posts.body}</div>
+                            <button
+                                className="btn btn-primary"
+                                onClick={() => this.removeItem(posts)}
+                                type="button"
+                            >
+                                Delete
+                            </button>
+                        </li>
+                    ))}
+                </ul>
             </div>
-        )   
+        );
     }
 }
 
