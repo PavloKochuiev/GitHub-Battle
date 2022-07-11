@@ -3,6 +3,7 @@ import Home from "./Home";
 import Popular from "./Popular";
 import Battle from "./Battle";
 import Navigation from "./Navigation";
+import { Results } from "./Battle/Results";
 
 const App = () => (
     <Router>
@@ -12,6 +13,7 @@ const App = () => (
                 <Route exact path="/" component={Home} />
                 <Route exact path="/popular" component={Popular} />
                 <Route exact path="/battle" component={Battle} />
+                <Route exact path="/battle/results" component={Results } />
                 <Route
                     render={() => {
                         return <p>Not Found!</p>;

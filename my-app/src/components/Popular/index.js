@@ -37,7 +37,7 @@ export default class Popular extends React.Component {
                 {this.state.repos ? (
                     <Repos data={this.state.repos} />
                 ) : (
-                    <p style={{textAlign: "center"}}>Loading...</p>
+                    <p style={{textAlign: "center"}}></p>
                 )}
             </div>
         );
