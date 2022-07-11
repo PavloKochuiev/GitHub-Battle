@@ -1,64 +1,53 @@
-import React from "react";
+import React, { useState } from "react";
 import PlayerInput from "./PlayerInput";
 import PlayerPreview from "./PlayerPreview";
 import { Link } from "react-router-dom";
 
-export default class Battle extends React.Component {
-    constructor() {
-        super();
-        this.state = {
-            playerOneName: "",
-            playerTwoName: "",
-            playerOneImage: null,
-            playerTwoImage: null,
-        };
-    }
+const Battle = (props) => {
+    const [playerOneName, setPlayerOneName] = useState("");
+    const [playerTwoName, setPlayerTwoName] = useState("");
+    const [playerOneImage, setPlayerOneImage] = useState(null);
+    const [playerTwoImage, setPlayerTwoImage] = useState(null);
 
-    handleSubmit = (id, username) => {
-        this.setState({
-            [id + "Name"]: "username",
-            [id + "Image"]: "https://github.com/" + username + ".png?size200",
-        });
+    const handleSubmitOne = (username) => {
+        setPlayerOneName(username);
+        setPlayerOneImage("https://github.com/" + username + ".png?size200");
     };
 
-    handleReset = (id) => {
-        this.setState({
-            [id + "Name"]: "",
-            [id + "Image"]: null,
-        });
+    const handleSubmitTwo = (username) => {
+        setPlayerTwoName(username);
+        setPlayerTwoImage("https://github.com/" + username + ".png?size200");
     };
 
-    render() {
-        const { playerOneImage, playerOneName, playerTwoImage, playerTwoName } = this.state;
-
-        return (
-            <>
-                <div>
-                    <div className="row">
-                        {!playerOneName ? (
-                            <PlayerInput id="playerOne" onSubmit={this.handleSubmit} label="Player 1" />
-                        ) : (
-                            <PlayerPreview avatar={playerOneImage} username={playerOneName} />
-                        )}
-                        {!playerTwoName ? (
-                            <PlayerInput id="playerTwo" onSubmit={this.handleSubmit} label="Player 2" />
-                        ) : (
-                            <PlayerPreview avatar={playerTwoImage} username={playerTwoName} />
-                        )}
-                    </div>
+    return (
+        <>
+            <div>
+                <div className="row">
+                    {!playerOneName ? (
+                        <PlayerInput id="playerOne" onSubmit={handleSubmitOne} label="Player 1" />
+                    ) : (
+                        <PlayerPreview avatar={playerOneImage} username={playerOneName} />
+                    )}
+                    {!playerTwoName ? (
+                        <PlayerInput id="playerTwo" onSubmit={handleSubmitTwo} label="Player 2" />
+                    ) : (
+                        <PlayerPreview avatar={playerTwoImage} username={playerTwoName} />
+                    )}
                 </div>
-                {playerOneName && playerTwoName && (
-                    <Link
-                        className="button"
-                        to={{
-                            pathname: this.props.match.url + "/results",
-                            search: `?playerOneName=${playerOneName}&playerTwoName=${playerTwoName}`,
-                        }}
-                    >
-                        Battle
-                    </Link>
-                )}
-            </>
-        );
-    }
-}
+            </div>
+            {playerOneName && playerTwoName && (
+                <Link
+                    className="button"
+                    to={{
+                        pathname: props.match.url + "/results",
+                        search: `?playerOneName=${playerOneName}&playerTwoName=${playerTwoName}`,
+                    }}
+                >
+                    Battle
+                </Link>
+            )}
+        </>
+    );
+};
+
+export default Battle;
